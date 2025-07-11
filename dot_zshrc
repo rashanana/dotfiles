@@ -1,0 +1,50 @@
+# ---- Powerlevel10k Instant Prompt :wq
+# ----
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ---- Powerlevel10k Theme ----
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# ---- History Settings ----
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_VERIFY
+
+# ---- Key Bindings (Arrow Key History Search) ----
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+# ---- Zsh Plugins ----
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ---- Aliases ----
+alias ls="eza --icons=always"
+alias ll="ls -al"
+
+# ---- zoxide (Better cd) ----
+eval "$(zoxide init zsh)"
+alias cd='z'
+
+# ---- Environment Variables ----
+export PATH="$HOME/development/flutter/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+export PATH="$(ruby -r rubygems -e 'puts Gem.bindir'):$PATH"
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+export EDITOR=nvim
+# ---- Zsh Completions ----
+fpath+=/opt/homebrew/share/zsh/site-functions
+autoload -Uz compinit
+compinit -C  # suppress errors for missing or insecure completion files
+
