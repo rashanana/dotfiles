@@ -1,8 +1,8 @@
 # Development Environment
 
-This repository contains my macOS shell and terminal configuration managed with [chezmoi](https://www.chezmoi.io/).
+This repository contains my OS shell and terminal configuration managed with [chezmoi](https://www.chezmoi.io/).
 
-The goal is to make a new Mac easy to reproduce without manually remembering every tool and configuration step.
+The goal is to make a new easy to reproduce without manually remembering every tool and configuration step.
 
 ## Overview
 
@@ -41,7 +41,7 @@ Do **not** use pyenv for this setup.
 
 ---
 
-# New Mac Setup
+# New  Setup
 
 ## 1. Install Homebrew
 
@@ -93,9 +93,9 @@ chezmoi managed
 
 ---
 
-# 4. Updating an Existing Mac
+# 4. Updating an Existing 
 
-When changes have been committed and pushed from another machine:
+When changes have been committed and pushed from another hine:
 
 ```bash
 chezmoi update
@@ -237,7 +237,7 @@ git commit -m "Update zsh configuration"
 git push
 ```
 
-On another Mac:
+On another :
 
 ```bash
 chezmoi update
@@ -252,7 +252,7 @@ The shell configuration expects:
 * zsh-autosuggestions
 * zsh-syntax-highlighting
 
-On Apple Silicon Macs, Homebrew normally installs these under:
+On Apple Silicon s, Homebrew normally installs these under:
 
 ```text
 /opt/homebrew/
@@ -272,7 +272,7 @@ exec zsh
 
 The dotfiles configure the shell, but **chezmoi does not install every external dependency**.
 
-Keep the machine's installed packages reproducible separately.
+Keep the hine's installed packages reproducible separately.
 
 Useful commands:
 
@@ -292,7 +292,7 @@ This creates:
 Brewfile
 ```
 
-On a new Mac:
+On a new :
 
 ```bash
 brew bundle
@@ -307,7 +307,7 @@ This is the preferred way to reproduce the Homebrew side of the environment.
 The overall setup should look like:
 
 ```text
-macOS
+OS
 │
 ├── Homebrew
 │   ├── chezmoi
@@ -424,7 +424,7 @@ git commit -m "Update zsh configuration"
 git push
 ```
 
-### Getting changes on another Mac
+### Getting changes on another 
 
 ```bash
 chezmoi update
@@ -456,7 +456,7 @@ pipx install --python "$(uv python find 3.11)" <package>
 # Guiding Principles
 
 1. **chezmoi manages configuration.**
-2. **Homebrew manages macOS CLI/software dependencies.**
+2. **Homebrew manages OS CLI/software dependencies.**
 3. **uv manages Python versions and project environments.**
 4. **pipx manages globally installed Python CLI applications.**
 5. **Don't use pyenv unless there is a specific reason to add it.**
