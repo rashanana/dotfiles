@@ -20,6 +20,11 @@ alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 alias cls="clear"
 
+# eza / ls
+alias ls="eza --icons=always"
+alias l="eza -lh --icons=always"
+alias ll="eza -lah --icons=always"
+alias la="eza -a --icons=always"
 
 # ─── History ─────────────────────────────────────────────────────────────────
 
