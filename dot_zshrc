@@ -1,49 +1,59 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Powerlevel10k Instant Prompt
+# MUST stay near the top of ~/.zshrc.
+# ─────────────────────────────────────────────────────────────────────────────
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-# ─────────────────────────────────────────────────────────────────────────────
 
 
 # ─── Powerlevel10k Theme ─────────────────────────────────────────────────────
+
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
+
+# ─── General ─────────────────────────────────────────────────────────────────
+
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
-# ─── History Settings ────────────────────────────────────────────────────────
+alias cls="clear"
+
+
+# ─── History ─────────────────────────────────────────────────────────────────
+
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
 HISTSIZE=999
+
 setopt SHARE_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_VERIFY
 
 
-# ─── Key Bindings (Arrow Key History Search) ─────────────────────────────────
+# ─── Key Bindings ────────────────────────────────────────────────────────────
+
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
 
-# ─── Aliases ─────────────────────────────────────────────────────────────────
-alias ls="eza --icons=always"
-alias ll="ls -al"
+# ─── Git ─────────────────────────────────────────────────────────────────────
 
-# Git
 alias gc="git commit -m"
 alias gca="git commit -a -m"
 alias gp="git push origin HEAD"
 alias gpu="git pull origin"
 alias gst="git status"
+
 alias glog="git log --graph --topo-order \
   --pretty='%w(100,0,6)%C(yellow)%h%C(bold)%C(black)%d \
   %C(cyan)%ar %C(green)%an%n%C(bold)%C(white)%s %N' \
   --abbrev-commit"
+
 alias gdiff="git diff"
 alias gco="git checkout"
 alias gb="git branch"
@@ -54,59 +64,83 @@ alias gcoall="git checkout -- ."
 alias gr="git remote"
 alias gre="git reset"
 
-# Docker
+
+# ─── Docker ──────────────────────────────────────────────────────────────────
+
 alias dco="docker compose"
 alias dps="docker ps"
 alias dpa="docker ps -a"
 alias dl="docker ps -l -q"
 alias dx="docker exec -it"
 
-# Directories
+
+# ─── Directories ─────────────────────────────────────────────────────────────
+
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-# Terraform
+
+# ─── Terraform ──────────────────────────────────────────────────────────────
+
 alias tf="terraform"
 
-# General
-alias cls="clear"
 
-# ---- zoxide (Better cd) ----
+# ─── zoxide ─────────────────────────────────────────────────────────────────
+
 eval "$(zoxide init zsh)"
-alias cd='z'
+alias cd="z"
 
-eval $(thefuck --alias)
-alias fk='thefuck'
-# ─── Environment Variables ───────────────────────────────────────────────────
-export EDITOR=nvim
+
+# ─── TheFuck ─────────────────────────────────────────────────────────────────
+
+eval "$(thefuck --alias)"
+alias fk="thefuck"
+
+
+# ─── Environment ─────────────────────────────────────────────────────────────
+
+export EDITOR="nvim"
+
 export PATH="$HOME/development/flutter/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
 export PATH="$(ruby -r rubygems -e 'puts Gem.bindir'):$PATH"
-#export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+
+# Docker / Colima
+# export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
 
-# ─── Completions and SDKs (silenced) ──────────────────────────────────────────
-source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc &>/dev/null
+# ─── Google Cloud ────────────────────────────────────────────────────────────
+
 source /opt/homebrew/share/google-cloud-sdk/path.zsh.inc       &>/dev/null
-source <(gh completion -s zsh)                                  &>/dev/null
+source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc &>/dev/null
 
 
-# ─── Direnv ─────────────────────────────────────────────────────────────────
+# ─── GitHub CLI Completion ──────────────────────────────────────────────────
+
+source <(gh completion -s zsh) &>/dev/null
+
+
+# ─── Direnv ──────────────────────────────────────────────────────────────────
+
 eval "$(direnv hook zsh)"
 
 
 # ─── Zsh Completions ─────────────────────────────────────────────────────────
+
 fpath+=/opt/homebrew/share/zsh/site-functions
+
 autoload -Uz compinit
 compinit -C
 
 
 # ─── Zsh Plugins ────────────────────────────────────────────────────────────
+
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
