@@ -1,14 +1,19 @@
-# ---- Powerlevel10k Instant Prompt :wq
-# ----
+# ─────────────────────────────────────────────────────────────────────────────
+# Powerlevel10k Instant Prompt
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+# ─────────────────────────────────────────────────────────────────────────────
 
-# ---- Powerlevel10k Theme ----
+
+# ─── Powerlevel10k Theme ─────────────────────────────────────────────────────
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# ---- History Settings ----
+alias reload-zsh="source ~/.zshrc"
+alias edit-zsh="nvim ~/.zshrc"
+# ─── History Settings ────────────────────────────────────────────────────────
 HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
 HISTSIZE=999
@@ -17,34 +22,91 @@ setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
 setopt HIST_VERIFY
 
-# ---- Key Bindings (Arrow Key History Search) ----
+
+# ─── Key Bindings (Arrow Key History Search) ─────────────────────────────────
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
-# ---- Zsh Plugins ----
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# ---- Aliases ----
+# ─── Aliases ─────────────────────────────────────────────────────────────────
 alias ls="eza --icons=always"
 alias ll="ls -al"
+
+# Git
+alias gc="git commit -m"
+alias gca="git commit -a -m"
+alias gp="git push origin HEAD"
+alias gpu="git pull origin"
+alias gst="git status"
+alias glog="git log --graph --topo-order \
+  --pretty='%w(100,0,6)%C(yellow)%h%C(bold)%C(black)%d \
+  %C(cyan)%ar %C(green)%an%n%C(bold)%C(white)%s %N' \
+  --abbrev-commit"
+alias gdiff="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gadd="git add"
+alias ga="git add -p"
+alias gcoall="git checkout -- ."
+alias gr="git remote"
+alias gre="git reset"
+
+# Docker
+alias dco="docker compose"
+alias dps="docker ps"
+alias dpa="docker ps -a"
+alias dl="docker ps -l -q"
+alias dx="docker exec -it"
+
+# Directories
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+# Terraform
+alias tf="terraform"
+
+# General
+alias cls="clear"
 
 # ---- zoxide (Better cd) ----
 eval "$(zoxide init zsh)"
 alias cd='z'
 
-# ---- Environment Variables ----
+eval $(thefuck --alias)
+alias fk='thefuck'
+# ─── Environment Variables ───────────────────────────────────────────────────
+export EDITOR=nvim
 export PATH="$HOME/development/flutter/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 export PATH="$(ruby -r rubygems -e 'puts Gem.bindir'):$PATH"
-export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
-export EDITOR=nvim
-# ---- Zsh Completions ----
+#export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+
+
+# ─── Completions and SDKs (silenced) ──────────────────────────────────────────
+source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc &>/dev/null
+source /opt/homebrew/share/google-cloud-sdk/path.zsh.inc       &>/dev/null
+source <(gh completion -s zsh)                                  &>/dev/null
+
+
+# ─── Direnv ─────────────────────────────────────────────────────────────────
+eval "$(direnv hook zsh)"
+
+
+# ─── Zsh Completions ─────────────────────────────────────────────────────────
 fpath+=/opt/homebrew/share/zsh/site-functions
 autoload -Uz compinit
-compinit -C  # suppress errors for missing or insecure completion files
+compinit -C
+
+
+# ─── Zsh Plugins ────────────────────────────────────────────────────────────
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
